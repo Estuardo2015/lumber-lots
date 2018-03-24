@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, FlatList, Image, ActivityIndicator } from 'react-native';
 import { Header, Button, Icon } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
@@ -16,22 +16,29 @@ export default class LotList extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <View style={{ flex: 1, flexDirection: 'row', marginBottom: 3 }}>
+      <TouchableOpacity style={{ flex: 1, flexDirection: 'row', marginBottom: 3 }}
+        onPress={ ()=> this.props.navigation.navigate('Lot' , item.car_count)}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
           source={{ url: item.image}}/>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={{ fontSize: 18, color: 'black', marginBottom: 5 }}>
-            { item.id }
+        <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
+          <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
+            { item.name }
           </Text>
-          <Text style={{ fontSize: 16, color: 'gray', marginBottom: 15 }}>
+          <Text style={{ fontSize: 16, color: 'gray' }}>
             Total Spaces: { item.total_spaces }
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
       )
   }
 
-
+  renderSeparator = () => {
+    return(
+      <View
+        style={{ height: 1, width: '100%', backgroundColor: 'black' }}>
+      </View>
+    )
+  }
 
   componentDidMount() {
     const url = 'https://wizards13467653673838292827.herokuapp.com/lots'
@@ -39,7 +46,7 @@ export default class LotList extends React.Component {
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        lots: responseJson.lot_array
+        lots: responseJson.lot_array,
       })
     })
     .catch((error) => {
@@ -77,9 +84,12 @@ export default class LotList extends React.Component {
 
 
 
+
         <FlatList
           data={ this.state.lots }
           renderItem={ this.renderItem }
+          keyExtractor={ (item, index) => index }
+          ItemSeparatorComponent={ this.renderSeparator }
         />
 
 
