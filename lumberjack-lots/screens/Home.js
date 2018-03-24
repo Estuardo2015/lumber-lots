@@ -4,14 +4,14 @@ import { Header } from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
 
 
-export default class Lot extends React.Component {
+export default class Home extends React.Component {
   render() {
     return (
 
       <View style={{ flex: 1, backgroundColor: '#ddd'}}>
         <Header
-          leftComponent={{ icon: 'reply', color: '#fff' }}
-          centerComponent={{ text: 'Lot', style: { color: '#fff' } }}
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: 'Lumberjack Lots', style: { color: '#fff' } }}
           rightComponent={{ icon: 'info', color: '#fff' }}
           outerContainerStyles={{ backgroundColor: '#1B660F' }}
         />
@@ -20,3 +20,4 @@ export default class Lot extends React.Component {
     );
   }
 }
+
