@@ -1,10 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Header, Button, Icon } from 'react-native-elements'
+import { Header, Button, Icon, PricingCard } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
 
 export default class Lot extends React.Component {
+
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      name: this.props.navigation.state.params.name,
+      car_count: this.props.navigation.state.params.car_count,
+      total_spaces: this.props.navigation.state.params.total_spaces,
+    };
+  }
+
   render() {
     return (
 
@@ -12,7 +24,7 @@ export default class Lot extends React.Component {
         <Header
           leftComponent={
             <Icon onPress={()=>
-              this.props.navigation.navigate('LotList')}
+              this.props.navigation.navigate('LotList', {name: this.state.name})}
               name='reply'
               color='white'
             />
@@ -25,10 +37,17 @@ export default class Lot extends React.Component {
               color='white'
             />
           }
-          outerContainerStyles={{ backgroundColor: '#1B660F' }}
+          outerContainerStyles={{ backgroundColor: '#3E9231' }}
         />
 
-        
+        <PricingCard
+          color='#256E66'
+          title='Current spaces:'
+          price={this.state.car_count} 
+          info={['1 User', 'Basic Support', 'All Core Features']}
+          button={{ title: 'GET STARTED', icon: 'flight-takeoff' }}
+        />
+
 
       </View>
 

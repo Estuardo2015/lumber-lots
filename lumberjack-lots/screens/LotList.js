@@ -5,10 +5,11 @@ import { Header, Button, Icon } from 'react-native-elements'
 import { StackNavigator } from 'react-navigation'
 
 export default class LotList extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      lots: []
+      lots: [],
+      name: this.props.navigation.state.params.name
     };
   }
 
@@ -17,7 +18,7 @@ export default class LotList extends React.Component {
   renderItem = ({ item }) => {
     return (
       <TouchableOpacity style={{ flex: 1, flexDirection: 'row', marginBottom: 3 }}
-        onPress={ ()=> this.props.navigation.navigate('Lot' , item.car_count)}>
+        onPress={ ()=> this.props.navigation.navigate('Lot' , {name: this.state.name, car_count: item.car_count, total_spaces: item.total_spaces})}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
           source={{ url: item.image}}/>
         <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
@@ -41,21 +42,18 @@ export default class LotList extends React.Component {
   }
 
   componentDidMount() {
-    const url = 'https://wizards13467653673838292827.herokuapp.com/lots'
+    const url = 'https://wizards13467653673838292827.herokuapp.com/get_lots/' + this.state.name
     fetch(url)
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
-        lots: responseJson.lot_array,
+        lots: responseJson.lots,
       })
     })
     .catch((error) => {
       console.log(error)
     })
   }
-
-
-
 
   render() {
     return (
@@ -79,9 +77,12 @@ export default class LotList extends React.Component {
               color='white'
             />
           }
-          outerContainerStyles={{ backgroundColor: '#1B660F' }}
+          outerContainerStyles={{ backgroundColor: '#3E9231' }}
         />
 
+        <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
+          { this.name }
+        </Text>
 
 
 

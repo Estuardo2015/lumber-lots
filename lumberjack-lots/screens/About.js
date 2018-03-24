@@ -18,10 +18,13 @@ export default class Lot extends React.Component {
             />
           }
           centerComponent={{ text: 'Info', style: { color: '#fff' } }}
-          outerContainerStyles={{ backgroundColor: '#1B660F' }}
+          outerContainerStyles={{ backgroundColor: '#3E9231' }}
         />
-        <Text style={{ textAlign: 'center' }}>
+        <Text style={{ textAlign: 'center', margin: 15 }}>
           Made with love by the Wizards
+        </Text>
+        <Text style={{ textAlign: 'center', margin: 10 }}>
+          For Humboldt State Univerity 2018 Hackathon
         </Text>
         
       </View>
