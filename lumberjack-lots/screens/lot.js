@@ -4,9 +4,27 @@ import { Header, Button, Icon } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
 
+import api from '../utilities/api';
 
 export default class Lot extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      lot: {}
+    };
+  }
+
+  componentWillMount(){
+    api.getLot().then((res) => {
+      this.setState({
+        lot: res.lot
+      })
+    })
+  }
+
   render() {
+    console.log("Lot: ", this.state.lot);
     return (
 
       <View style={{ flex: 1, backgroundColor: '#ddd'}}>

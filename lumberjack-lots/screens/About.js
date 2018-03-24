@@ -4,32 +4,28 @@ import { Header, Button, Icon } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
 
-export default class Home extends React.Component {
+export default class Lot extends React.Component {
   render() {
     return (
+
       <View style={{ flex: 1, backgroundColor: '#ddd'}}>
         <Header
-          leftComponent={{ icon: 'menu', color: '#fff' }}
-
-          centerComponent={{ text: 'Lumberjack Lots', style: { color: '#fff' } }}
-          
-          rightComponent={
+          leftComponent={
             <Icon onPress={()=>
-              this.props.navigation.navigate('About')}
-              name='info'
+              this.props.navigation.navigate('Home')}
+              name='home'
               color='white'
             />
           }
-          
+          centerComponent={{ text: 'Info', style: { color: '#fff' } }}
           outerContainerStyles={{ backgroundColor: '#1B660F' }}
         />
-        <Button onPress={()=>
-          this.props.navigation.navigate('LotList')}
-          title='Humboldt State University'
-        />
+        <Text style={{ textAlign: 'center' }}>
+          Made with love by the Wizards
+        </Text>
+        
       </View>
 
     );
   }
 }
-

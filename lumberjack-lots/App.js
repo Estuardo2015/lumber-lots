@@ -6,6 +6,7 @@ import { StackNavigator } from 'react-navigation'
 import Home from './screens/Home'
 import LotList from './screens/LotList'
 import Lot from './screens/Lot'
+import About from './screens/About'
 
 
 export default class App extends React.Component {
@@ -21,7 +22,8 @@ export default class App extends React.Component {
 const AppNavigator = StackNavigator({
   Home: { screen : Home},
   LotList: { screen : LotList},
-  Lot: { screen : Lot}
+  Lot: { screen : Lot},
+  About: { screen : About }
 }, {
     headerMode: 'none',
 })
