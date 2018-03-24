@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import { Header, Button, Icon } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
@@ -8,7 +8,8 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      schools: []
+      schools: [],
+      isLoading: true
     };
   }
 
@@ -21,7 +22,7 @@ export default class Home extends React.Component {
         <Image style={{ width: 80, height: 80, margin: 5 }}
           source={{ url: item.image}}/>
         <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
-          <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
+          <Text style={{ fontSize: 18, color: 'black'}}>
             { item.nickname }
           </Text>
         </View>
@@ -44,6 +45,7 @@ export default class Home extends React.Component {
     .then((responseJson) => {
       this.setState({
         schools: responseJson.schools,
+        isLoading: false
       })
     })
     .catch((error) => {
@@ -53,10 +55,14 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ddd'}}>
+      this.state.isLoading
+      ?
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size= "large" color="#330066" animating />
+      </View>
+      :
+      <View style={{ flex: 1, backgroundColor: '#ECEFF1'}}>
         <Header
-          leftComponent={{ icon: 'menu', color: '#fff' }}
-
           centerComponent={{ text: 'Lumberjack Lots', style: { color: '#fff' } }}
           
           rightComponent={
@@ -67,10 +73,11 @@ export default class Home extends React.Component {
             />
           }
 
-          outerContainerStyles={{ backgroundColor: '#3E9231' }}
+          outerContainerStyles={{ backgroundColor: '#558B2F' }}
         />
 
         <FlatList
+          ItemSeparatorComponent={ this.renderSeparator }
           data={ this.state.schools }
           renderItem={ this.renderItem }
           keyExtractor={ (item, index) => index }

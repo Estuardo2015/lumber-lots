@@ -8,7 +8,7 @@ export default class Lot extends React.Component {
   render() {
     return (
 
-      <View style={{ flex: 1, backgroundColor: '#ddd'}}>
+      <View style={{ flex: 1, backgroundColor: '#ECEFF1'}}>
         <Header
           leftComponent={
             <Icon onPress={()=>
@@ -18,7 +18,7 @@ export default class Lot extends React.Component {
             />
           }
           centerComponent={{ text: 'Info', style: { color: '#fff' } }}
-          outerContainerStyles={{ backgroundColor: '#3E9231' }}
+          outerContainerStyles={{ backgroundColor: '#558B2F' }}
         />
         <Text style={{ textAlign: 'center', margin: 15 }}>
           Made with love by the Wizards
@@ -26,7 +26,7 @@ export default class Lot extends React.Component {
         <Text style={{ textAlign: 'center', margin: 10 }}>
           For Humboldt State Univerity 2018 Hackathon
         </Text>
-        
+
       </View>
 
     );

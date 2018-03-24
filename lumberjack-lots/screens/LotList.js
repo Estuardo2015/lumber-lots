@@ -9,7 +9,9 @@ export default class LotList extends React.Component {
     super(props);
     this.state = {
       lots: [],
-      name: this.props.navigation.state.params.name
+      name: this.props.navigation.state.params.name,
+      isLoading: true
+
     };
   }
 
@@ -18,7 +20,7 @@ export default class LotList extends React.Component {
   renderItem = ({ item }) => {
     return (
       <TouchableOpacity style={{ flex: 1, flexDirection: 'row', marginBottom: 3 }}
-        onPress={ ()=> this.props.navigation.navigate('Lot' , {name: this.state.name, car_count: item.car_count, total_spaces: item.total_spaces})}>
+        onPress={ ()=> this.props.navigation.navigate('Lot' , {name: this.state.name, car_count: item.car_count, total_spaces: item.total_spaces, lot_name: item.name})}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
           source={{ url: item.image}}/>
         <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
@@ -48,6 +50,7 @@ export default class LotList extends React.Component {
     .then((responseJson) => {
       this.setState({
         lots: responseJson.lots,
+        isLoading: false
       })
     })
     .catch((error) => {
@@ -57,9 +60,13 @@ export default class LotList extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ddd'}}>
-        
-
+      this.state.isLoading
+      ?
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size= "large" color="#330066" animating />
+      </View>
+      :
+      <View style={{ flex: 1, backgroundColor: '#ECEFF1'}}>
 
         <Header
           leftComponent={
@@ -77,14 +84,8 @@ export default class LotList extends React.Component {
               color='white'
             />
           }
-          outerContainerStyles={{ backgroundColor: '#3E9231' }}
+          outerContainerStyles={{ backgroundColor: '#558B2F' }}
         />
-
-        <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
-          { this.name }
-        </Text>
-
-
 
         <FlatList
           data={ this.state.lots }
@@ -92,8 +93,6 @@ export default class LotList extends React.Component {
           keyExtractor={ (item, index) => index }
           ItemSeparatorComponent={ this.renderSeparator }
         />
-
-
 
       </View>
 
