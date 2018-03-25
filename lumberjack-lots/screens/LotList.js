@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, FlatList, Image, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, RefreshControl, StyleSheet, Text, View, FlatList, Image, ActivityIndicator } from 'react-native';
 import { Header, Button, Icon } from 'react-native-elements'
 
 import { StackNavigator } from 'react-navigation'
@@ -12,8 +12,6 @@ export default class LotList extends React.Component {
       name: this.props.navigation.state.params.name,
       nickname: this.props.navigation.state.params.nickname,
       color: this.props.navigation.state.params.color,
-      isLoading: true
-
     };
   }
 
@@ -29,11 +27,14 @@ export default class LotList extends React.Component {
         <Image style={{ width: 80, height: 80, margin: 5 }}
           source={{ url: 'https://s3.us-east-2.amazonaws.com/lumberlots/' + item.name + '.jpg'}}/>
         <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
-          <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
+          <Text style={{ fontSize: 18, color: 'black', marginBottom: 10 }}>
             { item.name }
           </Text>
           <Text style={{ fontSize: 16, color: 'gray' }}>
             Total Spaces: { item.total_spaces }
+          </Text>
+          <Text style={{ fontSize: 16, color: 'gray' }}>
+            Cars: { item.car_count }
           </Text>
         </View>
         <View style={{ marginTop: 35 }}>
@@ -53,7 +54,6 @@ export default class LotList extends React.Component {
     .then((responseJson) => {
       this.setState({
         lots: responseJson.lots,
-        isLoading: false
       })
     })
     .catch((error) => {
@@ -63,12 +63,6 @@ export default class LotList extends React.Component {
 
   render() {
     return (
-      this.state.isLoading
-      ?
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size= "large" color="#330066" animating />
-      </View>
-      :
       <View style={{ flex: 1, backgroundColor: '#ECEFF1'}}>
 
         <Header

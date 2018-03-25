@@ -8,8 +8,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      schools: [],
-      isLoading: true
+      schools: []
     };
   }
 
@@ -46,7 +45,6 @@ export default class Home extends React.Component {
     .then((responseJson) => {
       this.setState({
         schools: responseJson.schools,
-        isLoading: false
       })
     })
     .catch((error) => {
@@ -56,12 +54,6 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      this.state.isLoading
-      ?
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size= "large" color="#330066" animating />
-      </View>
-      :
       <View style={{ flex: 1, backgroundColor: '#ECEFF1'}}>
         <Header
           centerComponent={{ text: 'Lumberjack Lots', style: { color: '#fff' } }}
