@@ -10,6 +10,8 @@ export default class LotList extends React.Component {
     this.state = {
       lots: [],
       name: this.props.navigation.state.params.name,
+      nickname: this.props.navigation.state.params.nickname,
+      color: this.props.navigation.state.params.color,
       isLoading: true
 
     };
@@ -19,10 +21,13 @@ export default class LotList extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={{ flex: 1, flexDirection: 'row', marginBottom: 3 }}
-        onPress={ ()=> this.props.navigation.navigate('Lot' , {name: this.state.name, car_count: item.car_count, total_spaces: item.total_spaces, lot_name: item.name})}>
+      <TouchableOpacity style={{ flex: 1, flexDirection: 'row', 
+          borderRadius: 4, 
+          borderBottomWidth: 1,
+          borderBottomColor: '#d6d7da', }}
+        onPress={ ()=> this.props.navigation.navigate('Lot' , {name: this.state.name, car_count: item.car_count, total_spaces: item.total_spaces, lot_name: item.name, color: this.state.color, nickname: this.state.nickname})}>
         <Image style={{ width: 80, height: 80, margin: 5 }}
-          source={{ url: item.image}}/>
+          source={{ url: 'https://s3.us-east-2.amazonaws.com/lumberlots/' + item.name + '.jpg'}}/>
         <View style={{ flex: 1, justifyContent: 'center', marginLeft: 5 }}>
           <Text style={{ fontSize: 18, color: 'black', marginBottom: 15 }}>
             { item.name }
@@ -31,16 +36,14 @@ export default class LotList extends React.Component {
             Total Spaces: { item.total_spaces }
           </Text>
         </View>
+        <View style={{ marginTop: 35 }}>
+          <Icon
+            name='chevron-right'
+            color='gray'
+          />
+        </View>
       </TouchableOpacity>
       )
-  }
-
-  renderSeparator = () => {
-    return(
-      <View
-        style={{ height: 1, width: '100%', backgroundColor: 'black' }}>
-      </View>
-    )
   }
 
   componentDidMount() {
@@ -76,7 +79,7 @@ export default class LotList extends React.Component {
               color='white'
             />
           }
-          centerComponent={{ text: 'Available Lots', style: { color: '#fff' } }}
+          centerComponent={{ text: this.state.nickname, style: { color: '#fff' } }}
           rightComponent={
             <Icon onPress={()=>
               this.props.navigation.navigate('About')}
@@ -84,14 +87,13 @@ export default class LotList extends React.Component {
               color='white'
             />
           }
-          outerContainerStyles={{ backgroundColor: '#558B2F' }}
+          outerContainerStyles={{ backgroundColor: this.state.color }}
         />
 
         <FlatList
           data={ this.state.lots }
           renderItem={ this.renderItem }
           keyExtractor={ (item, index) => index }
-          ItemSeparatorComponent={ this.renderSeparator }
         />
 
       </View>
